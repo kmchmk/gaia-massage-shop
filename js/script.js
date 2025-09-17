@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
 
+    // Defensive: ensure menu is closed on initial load (protect against cached state)
+    if (hamburger) hamburger.classList.remove('active');
+    if (navMenu) navMenu.classList.remove('active');
+
     // Toggle mobile menu
     hamburger.addEventListener('click', function() {
         hamburger.classList.toggle('active');
@@ -115,17 +119,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get form data
             const formData = new FormData(contactForm);
             const name = formData.get('name');
-            const email = formData.get('email');
+            const phone = formData.get('phone');
             const message = formData.get('message');
 
-            // Simple validation
-            if (!name || !email || !message) {
-                alert('Please fill in all required fields.');
-                return;
-            }
-
-            if (!isValidEmail(email)) {
-                alert('Please enter a valid email address.');
+            // Simple validation: require name and message. Email is not used for contact.
+            if (!name || !message) {
+                alert('Please fill in the required fields (name and message).');
                 return;
             }
 

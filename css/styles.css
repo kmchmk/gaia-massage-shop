@@ -49,6 +49,170 @@ p {
     color: #555;
 }
 
+/* Mobile-first responsive rules */
+/* Base small-screen adjustments */
+html, body {
+    -webkit-text-size-adjust: 100%;
+}
+
+.container {
+    padding: 0 16px;
+}
+
+/* Make buttons and tappable elements easier to hit */
+.btn {
+    padding: 14px 18px;
+    border-radius: 12px;
+}
+
+/* Stack nav and enable hamburger */
+.nav-menu {
+    gap: 1rem;
+}
+
+.hamburger {
+    display: flex;
+}
+
+/* Mobile nav hidden by default, shown when active */
+.nav-menu {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    background: rgba(255,255,255,0.98);
+    height: calc(100vh - 80px);
+    width: 260px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    box-shadow: -6px 0 18px rgba(0,0,0,0.08);
+    display: none; /* keep default hidden; will enable below for small screens */
+}
+
+.nav-menu.active {
+    transform: translateX(0);
+}
+
+.nav-menu .nav-link {
+    padding: 12px 8px;
+    width: 100%;
+}
+
+/* Ensure header doesn't cover content on small screens */
+main { 
+    padding-top: 90px;
+}
+
+/* Hero adjustments */
+.hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 2.5rem 0;
+}
+
+.hero-title { font-size: 1.6rem; }
+.hero-subtitle { font-size: 1rem; }
+
+.hero-buttons { display: flex; gap: 0.75rem; flex-direction: column; }
+.btn { width: 100%; }
+
+/* About / Services / Gallery stack */
+.about-content, .services-container, .gallery-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+/* Service cards make full width on mobile */
+.service-card, .gallery-item {
+    width: 100%;
+}
+
+/* Footer adjustments */
+.footer-content { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+.footer-bottom { text-align: center; margin-top: 1rem; }
+
+/* Small-screen specific (max-width 768px) */
+@media (max-width: 768px) {
+    .nav-container { height: 64px; }
+    .nav-logo h1 { font-size: 1.2rem; }
+
+    /* enable mobile nav display */
+    .nav-menu { display: flex; }
+
+    /* transform nav-menu into overlay if not active */
+    .nav-menu:not(.active) { transform: translateX(100%); }
+
+    .hamburger { margin-left: 8px; }
+
+    /* reduce paddings for containers */
+    .container { padding: 0 12px; }
+
+    /* Typography scale down */
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.4rem; }
+    h3 { font-size: 1.15rem; }
+
+    /* Make hero image placeholder smaller */
+    .hero-image { min-height: 140px; }
+
+    /* Grid for services: two-column on medium devices */
+    @media (max-width: 520px) {
+        .hero-title { font-size: 1.4rem; }
+    }
+}
+
+/* Hero stacking controls for mobile: default places image below text (so paragraph has full width).
+   Add class `hero--image-top` to the `.hero` section to flip and show image above text. */
+@media (max-width: 768px) {
+    .hero {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 100px 16px 40px !important;
+        min-height: auto !important;
+    }
+
+    .hero-content {
+        order: 1;
+        width: 100%;
+        padding: 0 !important;
+    }
+
+    .hero-image {
+        order: 2;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .hero-placeholder {
+        width: 100%;
+        max-width: 480px;
+        height: 200px;
+        border-radius: 16px;
+    }
+
+    /* Optional: if you prefer the image at the top on mobile, add `hero--image-top` to the section */
+    .hero.hero--image-top .hero-image { order: 1; }
+    .hero.hero--image-top .hero-content { order: 2; }
+}
+
+/* Larger screens behavior (desktop) - keep existing layout */
+@media (min-width: 769px) {
+    .hamburger { display: none; }
+    .nav-menu { display: flex !important; position: static; height: auto; width: auto; flex-direction: row; background: transparent; box-shadow: none; transform: none; }
+    main { padding-top: 100px; }
+    .hero { grid-template-columns: 1fr 1fr; align-items: center; }
+    .hero-buttons { flex-direction: row; }
+    .service-card { display: block; }
+}
+
+
 /* Color Palette */
 :root {
     --primary-green: #2c5f2d;
@@ -477,6 +641,9 @@ section {
     display: flex;
     gap: 1rem;
     margin-top: 1rem;
+    justify-content: center; /* center icons horizontally */
+    align-items: center;
+    flex-wrap: wrap; /* allow wrapping on narrow screens */
 }
 
 .social-link {
@@ -513,24 +680,37 @@ section {
 @media (max-width: 768px) {
     .hamburger {
         display: flex;
+        z-index: 1201;
     }
 
+    /* Off-canvas mobile nav hidden by default. Shown only when .active */
     .nav-menu {
+        display: flex;
         position: fixed;
-        left: -100%;
-        top: 80px;
+        top: 64px;
+        right: 0;
+        width: 260px;
+        max-width: 80%;
+        height: calc(100vh - 64px);
         flex-direction: column;
-        background-color: white;
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
-        padding: 2rem 0;
+        align-items: flex-start;
+        padding: 1.5rem;
         gap: 1rem;
+        background-color: rgba(255,255,255,0.98);
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        transform: translateX(100%);
+        transition: transform 0.25s ease, opacity 0.25s ease;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        z-index: 1200;
     }
 
     .nav-menu.active {
-        left: 0;
+        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
     }
 
     .hero-content {
@@ -623,6 +803,50 @@ section {
         grid-template-columns: 1fr;
         gap: 2rem;
         text-align: center;
+    }
+}
+
+/* Strong override: ensure mobile nav is hidden by default and shown only when active */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex !important;
+        z-index: 1201;
+    }
+
+    /* Off-canvas hidden state (explicit) */
+    .nav-menu {
+        display: flex !important;
+        position: fixed !important;
+        top: 64px !important;
+        right: 0 !important;
+        left: auto !important;
+        width: 260px !important;
+        max-width: 80% !important;
+        height: calc(100vh - 64px) !important;
+        transform: translateX(100%) !important;
+        transition: transform 0.25s ease, opacity 0.25s ease !important;
+        box-shadow: -6px 0 18px rgba(0,0,0,0.08) !important;
+        background: rgba(255,255,255,0.98) !important;
+        padding: 1.25rem !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        z-index: 1200 !important;
+    }
+
+    .nav-menu.active {
+        transform: translateX(0) !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+    }
+
+    /* Make sure links inside are full width and easy to tap */
+    .nav-menu .nav-link {
+        display: block !important;
+        width: 100% !important;
+        padding: 12px 16px !important;
+        text-align: left !important;
     }
 }
 
@@ -868,6 +1092,40 @@ section {
 
 .package-includes li:last-child {
     border-bottom: none;
+}
+
+/* Final override: ensure mobile nav is hidden by default on small screens
+   This comes last to override earlier conflicting declarations */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex !important;
+    }
+
+    .nav-menu {
+        display: flex !important;
+        position: fixed !important;
+        top: 64px !important;
+        right: 0 !important;
+        width: 260px !important;
+        max-width: 80% !important;
+        height: calc(100vh - 64px) !important;
+        flex-direction: column !important;
+        padding: 1.25rem !important;
+        background: rgba(255,255,255,0.98) !important;
+        transform: translateX(100%) !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transition: transform 0.25s ease, opacity 0.25s ease !important;
+        z-index: 1200 !important;
+    }
+
+    .nav-menu.active {
+        transform: translateX(0) !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+    }
 }
 
 /* Gallery Page Styles */
