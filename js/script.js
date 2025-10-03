@@ -1,5 +1,113 @@
 // Mobile Navigation Toggle
 document.addEventListener('DOMContentLoaded', function() {
+    // Services data structure
+    const services = [
+        {
+            name: "Thai Massage",
+            emoji: "🙏",
+            description: "Traditional Thai massage combining acupressure, stretching, and therapeutic techniques to promote health and wellness.",
+            duration: "1 hour",
+            price: "₿300",
+            features: ["✓ Traditional techniques", "✓ Health benefits", "✓ Stress relief"]
+        },
+        {
+            name: "Oil Massage",
+            emoji: "🛁",
+            description: "Relaxing oil massage using aromatic oils to soothe muscles and enhance relaxation.",
+            duration: "1 hour",
+            price: "₿500",
+            features: ["✓ Aromatherapy", "✓ Muscle relaxation", "✓ Deep soothing"]
+        },
+        {
+            name: "Foot Massage",
+            emoji: "🦶",
+            description: "Relaxing foot massage focusing on pressure points to improve circulation and reduce fatigue.",
+            duration: "1 hour",
+            price: "₿300",
+            features: ["✓ Improved circulation", "✓ Fatigue relief", "✓ Relaxation"]
+        },
+        {
+            name: "Neck, Shoulder and Back Massage",
+            emoji: "💆",
+            description: "Targeted massage for neck, shoulders, and back to relieve tension and improve posture.",
+            duration: "1 hour",
+            price: "₿300",
+            features: ["✓ Tension relief", "✓ Posture improvement", "✓ Pain reduction"]
+        },
+        {
+            name: "Deep Tissue Massage",
+            emoji: "💪",
+            description: "Intensive massage targeting deep muscle layers to release chronic tension and knots.",
+            duration: "1 hour",
+            price: "₿500",
+            features: ["✓ Chronic pain relief", "✓ Knot release", "✓ Muscle recovery"]
+        },
+        {
+            name: "Whole-body Acupressure Therapy",
+            emoji: "🌟",
+            description: "Comprehensive acupressure treatment for the entire body to balance energy flow.",
+            duration: "1 hour",
+            price: "₿800",
+            features: ["✓ Energy balancing", "✓ Full body treatment", "✓ Holistic healing"]
+        },
+        {
+            name: "Herbal Compress Massage",
+            emoji: "🌿",
+            description: "Therapeutic massage using heated herbal compresses to relieve pain and inflammation.",
+            duration: "1 hour",
+            price: "₿500",
+            features: ["✓ Herbal benefits", "✓ Inflammation reduction", "✓ Pain relief"]
+        },
+        {
+            name: "Therapeutic Thai Massage for 16 Common Ailments",
+            emoji: "🩹",
+            description: "Specialized Thai massage addressing 16 common health issues with targeted techniques.",
+            duration: "1 hour",
+            price: "₿500",
+            features: ["✓ Targeted therapy", "✓ Health issue relief", "✓ Specialized care"]
+        },
+        {
+            name: "Hot Oil Massage",
+            emoji: "🔥",
+            description: "Luxurious massage with heated oils to deeply penetrate muscles and promote healing.",
+            duration: "1 hour",
+            price: "₿650",
+            features: ["✓ Deep penetration", "✓ Healing oils", "✓ Luxury experience"]
+        }
+    ];
+
+    // Generate services dynamically
+    const container = document.getElementById('services-container');
+    if (container) {
+        services.forEach(service => {
+            const card = document.createElement('div');
+            card.className = 'service-card';
+            card.innerHTML = `
+                <div class="service-image">
+                    <div class="service-placeholder">${service.emoji} ${service.name}</div>
+                </div>
+                <div class="service-content">
+                    <h3>${service.name}</h3>
+                    <p class="service-description">${service.description}</p>
+                    <div class="service-details">
+                        <div class="service-duration">
+                            <span class="label">Duration:</span>
+                            <span class="value">${service.duration}</span>
+                        </div>
+                        <div class="service-price">
+                            <span class="label">Price:</span>
+                            <span class="value">${service.price}</span>
+                        </div>
+                    </div>
+                    <div class="service-features">
+                        ${service.features.map(f => `<span class="feature-tag">${f}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
