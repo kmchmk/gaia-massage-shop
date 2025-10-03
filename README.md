@@ -1,5 +1,5 @@
-# Gaia Massage Shop
-A website for Gaia Massage Shop in Chiang Mai, Thailand
+# Gaya Massage Shop
+A website for Gaya Massage Shop in Chiang Mai, Thailand
 
 ## Run locally
 
